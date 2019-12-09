@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
+import MemberInfoRouter from './modules/member/info'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -73,7 +74,7 @@ export const constantRoutes = [
         meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
-  }
+  },MemberInfoRouter
 ]
 export const asyncRoutes = [
 ]

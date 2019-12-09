@@ -50,10 +50,6 @@ export default [
                 if (status && item.status.name !== status) return false
                 return true
             })
-
-            if (sort === '-id') {
-                mockList = mockList.reverse()
-            }
             const pageList = mockList.filter((item, index) => index < size * number && index >= size * (number - 1))
 
             return {

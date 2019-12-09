@@ -8,11 +8,11 @@
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="query" size="small" label-width="140px">
-          <el-form-item label="名称">
+          <el-form-item label="姓名">
             <el-input style="width: 203px" v-model="query.realName" placeholder="姓名"></el-input>
           </el-form-item>
           <el-form-item label="手机号">
-            <el-input style="width: 203px" v-model="query.mobile" placeholder="姓名"></el-input>
+            <el-input style="width: 203px" v-model="query.mobile" placeholder="手机号"></el-input>
           </el-form-item>
           <el-form-item label="等级">
             <el-select v-model="query.level.code" placeholder="选择状态">
@@ -47,22 +47,22 @@
     <div class="table-container">
       <el-table
         ref="adminStatusTable"
-        :data="list"
+        :data="data"
         style="width: 100%"
-        v-loading="listLoading"
+        v-loading="loading"
         border
       >
         <el-table-column type="selection" width="60" align="center"></el-table-column>
         <el-table-column label="编号" width="300" align="center">
           <template slot-scope="scope">{{scope.row.code}}</template>
         </el-table-column>
-        <el-table-column label="姓名" width="100" align="center">
+        <el-table-column label="姓名" align="center">
           <template slot-scope="scope">{{scope.row.realName}}</template>
         </el-table-column>
-        <el-table-column label="手机号" width="100" align="center">
+        <el-table-column label="手机号" align="center">
           <template slot-scope="scope">{{scope.row.mobile}}</template>
         </el-table-column>
-        <el-table-column label="电子邮件" width="100" align="center">
+        <el-table-column label="电子邮件" align="center">
           <template slot-scope="scope">{{scope.row.email}}</template>
         </el-table-column>
         <el-table-column label="可用状态" align="center" width="100px">
@@ -85,10 +85,10 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         layout="total, sizes,prev, pager, next,jumper"
-        :page-size="listQuery.size"
+        :page-size="query.page.size"
         :page-sizes="[5,10,15]"
-        :current-page.sync="listQuery.page"
-        :total="total"
+        :current-page.sync="query.page.number"
+        :total="query.page.total"
       ></el-pagination>
     </div>
   </div>
@@ -102,19 +102,21 @@ export default {
   data() {
     return {
       data: [],
+      loading: true,
       query: {
         realName: "",
         mobile: "",
         email: "",
         level: {
-          code: 0
+          code: null
         },
         status: {
-          code: 0
+          code: null
         },
         page: {
           number: 1,
-          size: 10
+          size: 10,
+          total:10
         }
       },
       levelList: [
@@ -129,6 +131,9 @@ export default {
       ]
     };
   },
+  created(){
+    this.fetchData()
+  },
   methods: {
     fetchData() {
       getData(this.query)
@@ -138,16 +143,19 @@ export default {
           } else {
             this.$notify.error({
               title: "错误",
-              message: res.message
+              message: res.message,
+              duration:3
             });
           }
         })
         .catch(err => {
           this.$notify.error({
             title: "错误",
-            message: err
+            message: err,
+            duration:3
           });
         });
+        this.loading = false
     },
     search() {
         this.query.page.number=1

@@ -46,7 +46,7 @@
   </el-card>
 </template>
 <script>
-import SingleUpload from "@/components/Upload/singleUpload";
+import SingleUpload from "@/components/Upload/SingleImage";
 export default {
   name: "MemberForm",
   components: [],

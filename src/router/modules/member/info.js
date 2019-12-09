@@ -25,3 +25,5 @@ const MemberInfoRouter = {
         }
     ]
 }
+
+export default MemberInfoRouter
