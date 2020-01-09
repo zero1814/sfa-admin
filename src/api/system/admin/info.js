@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getData(data) {
     return request({
-        url: '/member/page',
+        url: '/system/admin/page',
         method: 'post',
         data
     })
@@ -10,7 +10,7 @@ export function getData(data) {
 
 export function getInfo(val) {
     return request({
-        url: '/member/page',
+        url: '/system/admin/info',
         method: 'get',
         params: { id: val }
     })
